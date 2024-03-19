@@ -36,3 +36,12 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
 
 });
+
+
+// Datepicker widget
+$(function () {
+    $('#datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+    });
+  });

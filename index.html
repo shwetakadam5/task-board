@@ -25,6 +25,40 @@
       <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
     <!-- Todo: Create a modal with a form to add tasks -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="formModalLabel">Add Task</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+           <form class="row g-3">
+            
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Task Title</label>               
+                <input class="form-control form-control-sm" type="text" placeholder="Enter Task Title" aria-label=".form-control-sm task title">
+              </div>
+              <div class="col-md-6">
+                <label for="date" class="form-label">Task Due Date</label>
+                <input type="text" class="form-control" id="datepicker" autocomplete="off"/>              
+              </div>
+              <div class="col-12">
+                <label for="exampleFormControlTextarea1" class="form-label">Task Description</label>
+                <textarea class="form-control" id="taskdesc" rows="3"></textarea>
+              </div>            
+
+           </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btn-success">Add Task</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!-- Todo: Create a modal with a form to add tasks -->
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">

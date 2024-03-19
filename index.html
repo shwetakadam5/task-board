@@ -24,7 +24,7 @@
     <div class="text-center mb-5">
       <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
-    <!-- Todo: Create a modal with a form to add tasks -->
+   <!-- Created a modal with a form to add tasks Start-->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -33,32 +33,32 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-           <form class="row g-3">
-            
+            <form class="row g-3" id="task-form">
               <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Task Title</label>               
-                <input class="form-control form-control-sm" type="text" placeholder="Enter Task Title" aria-label=".form-control-sm task title">
+                <label for="inputTaskTitle" class="form-label">Task Title</label>
+                <input id="task-title-input" type="text" class="form-control" placeholder="Enter Task Title">
               </div>
               <div class="col-md-6">
-                <label for="date" class="form-label">Task Due Date</label>
-                <input type="text" class="form-control" id="datepicker" autocomplete="off"/>              
+                <label for="inputDueDate" class="form-label">Task Due Date</label>
+                <input id="task-due-date-input" type="text" class="form-control" id="datepicker" autocomplete="off"
+                  placeholder="Enter task due date" />
               </div>
               <div class="col-12">
-                <label for="exampleFormControlTextarea1" class="form-label">Task Description</label>
-                <textarea class="form-control" id="taskdesc" rows="3"></textarea>
-              </div>            
-
-           </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary btn-success">Add Task</button>
+                <label for="textareaTaskDesc" class="form-label">Task Description</label>
+                <textarea id="task-desc" class="form-control" rows="3"
+                  placeholder="Start typing task description"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">Close</button>
+                <button type="submit" class="btn btn-primary btn-success">Add Task</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-     <!-- Todo: Create a modal with a form to add tasks -->
+    <!-- Created a modal with a form to add tasks End-->
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">
@@ -79,16 +79,16 @@
             <div id="in-progress-cards"></div>
           </div>
         </div>
+      </div>
+      <div class="col-12 col-lg-4 d-flex">
+        <div id="done" class="card border-light mb-3 lane flex-grow-1">
+          <div class="card-header bg-white">
+            <h2 class="card-title mb-1">Done</h2>
+          </div>
+          <div class="card-body bg-light">
+            <div id="done-cards"></div>
+          </div>
         </div>
-        <div class="col-12 col-lg-4 d-flex">
-          <div id="done" class="card border-light mb-3 lane flex-grow-1">
-            <div class="card-header bg-white">
-              <h2 class="card-title mb-1">Done</h2>
-            </div>
-            <div class="card-body bg-light">
-              <div id="done-cards"></div>
-          </div>
-          </div>
       </div>
     </div>
   </div>

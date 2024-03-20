@@ -33,15 +33,21 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form class="row g-3" id="task-form">
+            <form class="row g-3 needs-validation" id="task-form" novalidate>
               <div class="col-md-6">
                 <label for="inputTaskTitle" class="form-label">Task Title</label>
-                <input id="task-title-input" type="text" class="form-control" placeholder="Enter Task Title">
+                <input id="task-title-input" type="text" class="form-control" placeholder="Enter Task Title" required>
+                <div class="invalid-feedback">
+                  Task Title is mandatory to Add Task.
+                </div>
               </div>
               <div class="col-md-6">
                 <label for="inputDueDate" class="form-label">Task Due Date</label>
                 <input id="task-due-date-input" type="text" class="form-control" id="datepicker" autocomplete="off"
-                  placeholder="Enter task due date" />
+                  placeholder="Enter task due date" required/>
+                  <div class="invalid-feedback">
+                    Task Due Date is mandatory to Add Task.
+                  </div>
               </div>
               <div class="col-12">
                 <label for="textareaTaskDesc" class="form-label">Task Description</label>

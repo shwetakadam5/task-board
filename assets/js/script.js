@@ -45,12 +45,15 @@ function handleAddTask(event) {
 
     console.log("HI I AM IN HANDLEADDTASK");
 
+    console.log(taskFormEl);
+
     event.preventDefault();
     //Read user input from the form
     const taskTitle = taskTitleInputEl.val().trim();
     const taskDueDate = taskDueDateInputEl.val();
     const taskDescription = taskDescInputEl.val().trim();
 
+if( taskTitle != ""  &&  taskDueDate != "" ){
 
     const taskDetail = {
         taskid: generateTaskId(),
@@ -69,6 +72,22 @@ function handleAddTask(event) {
     taskTitleInputEl.val('');
     taskDueDateInputEl.val('');
     taskDescInputEl.val('');
+
+
+    taskFormEl.removeClass('was-validated');
+    $('#formModal').modal('hide'); // Hide the modal  
+    
+}else{
+
+    event.stopPropagation();
+
+    console.log(taskFormEl);
+    taskFormEl.addClass('was-validated');   
+
+   
+
+   
+}
 
 
 }

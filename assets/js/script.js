@@ -34,84 +34,84 @@ function generateTaskId() {
 function createTaskCard(task) {
 
     const taskCard = $('<div>')
-    .addClass('card draggable my-3')
-    .attr('task-unique-id', task.taskid);
-  const cardHeader = $('<div>').addClass('card-header h4').text(task.tasktitle);
-  const cardBody = $('<div>').addClass('card-body');
-  const cardDescription = $('<p>').addClass('card-text').text(task.taskdesc);
-  const cardDueDate = $('<p>').addClass('card-text').text(task.taskduedate);
-  const cardDeleteBtn = $('<button>')
-    .addClass('btn btn-danger delete')
-    .text('Delete')
-    .attr('task-unique-id', task.taskid);
-  cardDeleteBtn.on('click', handleDeleteTask);
+        .addClass('card draggable my-3')
+        .attr('task-unique-id', task.taskid);
+    const cardHeader = $('<div>').addClass('card-header h4').text(task.tasktitle);
+    const cardBody = $('<div>').addClass('card-body');
+    const cardDescription = $('<p>').addClass('card-text').text(task.taskdesc);
+    const cardDueDate = $('<p>').addClass('card-text').text(task.taskduedate);
+    const cardDeleteBtn = $('<button>')
+        .addClass('btn btn-danger delete')
+        .text('Delete')
+        .attr('task-unique-id', task.taskid);
+    cardDeleteBtn.on('click', handleDeleteTask);
 
 
-  if (task.taskduedate && task.status !== 'done') {
-    const now = dayjs();
-    const taskDueDate = dayjs(task.taskduedate, 'DD/MM/YYYY');
+    if (task.taskduedate && task.status !== 'done') {
+        const now = dayjs();
+        const taskDueDate = dayjs(task.taskduedate, 'DD/MM/YYYY');
 
-    // If the task is due today, make the card yellow. If it is overdue, make it red.
-    if (now.isSame(taskDueDate, 'day')) {
-      taskCard.addClass('bg-warning text-white');
-    } else if (now.isAfter(taskDueDate)) {
-      taskCard.addClass('bg-danger text-white');
-      cardDeleteBtn.addClass('border-light');
+        // If the task is due today, make the card yellow. If it is overdue, make it red.
+        if (now.isSame(taskDueDate, 'day')) {
+            taskCard.addClass('bg-warning text-white');
+        } else if (now.isAfter(taskDueDate)) {
+            taskCard.addClass('bg-danger text-white');
+            cardDeleteBtn.addClass('border-light');
+        }
     }
-  }
 
-  cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
-  taskCard.append(cardHeader, cardBody);
+    cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+    taskCard.append(cardHeader, cardBody);
 
-  return taskCard;
+    return taskCard;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-//  Function call to read tasks list from local storage.
+    //  Function call to read tasks list from local storage.
     const tasks = readTasksFromStorage();
 
-  //  Empty existing tasks cards out of the lanes
-  const todoList = $('#todo-cards');
-  todoList.empty();
+    //  Empty existing tasks cards out of the lanes
+    const todoList = $('#todo-cards');
+    todoList.empty();
 
-  const inProgressList = $('#in-progress-cards');
-  inProgressList.empty();
+    const inProgressList = $('#in-progress-cards');
+    inProgressList.empty();
 
-  const doneList = $('#done-cards');
-  doneList.empty();
+    const doneList = $('#done-cards');
+    doneList.empty();
 
 
-  //  Loop through tasks and create task cards for each status : Function call to create the bootstrap task cardss.
-  for (let task of tasks) {
-    if (task.status === 'to-do') {
-      todoList.append(createTaskCard(task));
-    } else if (task.status === 'in-progress') {
-      inProgressList.append(createTaskCard(task));
-    } else if (task.status === 'done') {
-      doneList.append(createTaskCard(task));
+    //  Loop through tasks and create task cards for each status : Function call to create the bootstrap task cardss.
+    for (let task of tasks) {
+        if (task.status === 'to-do') {
+            todoList.append(createTaskCard(task));
+        } else if (task.status === 'in-progress') {
+            inProgressList.append(createTaskCard(task));
+        } else if (task.status === 'done') {
+            doneList.append(createTaskCard(task));
+        }
     }
-  }
 
-  //  Use JQuery UI to make task cards draggable
-  $('.draggable').draggable({
-    opacity: 0.7,
-    zIndex: 100,
-    // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
-    helper: function (e) {
-      console.log(e.target);
-      // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
-      const original = $(e.target).hasClass('ui-draggable')
-        ? $(e.target)
-        : $(e.target).closest('.ui-draggable');
+    //  Use JQuery UI to make task cards draggable
+    $('.draggable').draggable({
+        opacity: 0.7,
+        zIndex: 100,
+        // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+        helper: function (e) {
+            console.log(e.target);
+            // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
+            const original = $(e.target).hasClass('ui-draggable')
+                ? $(e.target)
+                : $(e.target).closest('.ui-draggable');
 
-        console.log(original);
-      // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
-      return original.clone().css({
-        width: original.outerWidth(),
-      });
-    },
-  });
+            console.log(original);
+            // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
+            return original.clone().css({
+                width: original.outerWidth(),
+            });
+        },
+    });
 
 
 }
@@ -130,49 +130,65 @@ function handleAddTask(event) {
     const taskDescription = taskDescInputEl.val().trim();
 
     // The task title and task due date are mandatory for adding the tasks.
-if( taskTitle != ""  &&  taskDueDate != "" ){
+    if (taskTitle != "" && taskDueDate != "") {
 
-    const taskDetail = {
-        taskid: generateTaskId(),
-        tasktitle: taskTitle,
-        taskduedate: taskDueDate,
-        taskdesc: taskDescription,
-        status: 'to-do',
-    };
+        const taskDetail = {
+            taskid: generateTaskId(),
+            tasktitle: taskTitle,
+            taskduedate: taskDueDate,
+            taskdesc: taskDescription,
+            status: 'to-do',
+        };
 
-    //Function call to read tasks from local storage and update the list
-    const allTasks = readTasksFromStorage();
-    allTasks.push(taskDetail);
+        //Function call to read tasks from local storage and update the list
+        const allTasks = readTasksFromStorage();
+        allTasks.push(taskDetail);
 
-    //Function call to add tasks to local storage
-    saveTasksToStorage(allTasks);
+        //Function call to add tasks to local storage
+        saveTasksToStorage(allTasks);
 
-    //Function call to create and display the tasks cards in the lanes.
-    renderTaskList();
-
-
-    // Clear the form inputs
-    taskTitleInputEl.val('');
-    taskDueDateInputEl.val('');
-    taskDescInputEl.val('');
+        //Function call to create and display the tasks cards in the lanes.
+        renderTaskList();
 
 
-    taskFormEl.removeClass('was-validated');
-    $('#formModal').modal('hide'); // Hide the modal  
-    
-}else{
+        // Clear the form inputs
+        taskTitleInputEl.val('');
+        taskDueDateInputEl.val('');
+        taskDescInputEl.val('');
 
-    event.stopPropagation();
-    console.log(taskFormEl);
-    taskFormEl.addClass('was-validated');   
-    
-}
+
+        taskFormEl.removeClass('was-validated');
+        $('#formModal').modal('hide'); // Hide the modal  
+
+    } else {
+
+        event.stopPropagation();
+        console.log(taskFormEl);
+        taskFormEl.addClass('was-validated');
+
+    }
 
 
 }
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
+
+    //Retrieve the task id of the card from the attribute added during card creation to delete
+    const taskIdToDelete = $(this).attr('task-unique-id');
+    const taskList = readTasksFromStorage();
+    console.log(`TaskList size from storage ${taskList.length}`);
+    for (let index = 0; index < taskList.length; index++) {
+        const task = taskList[index];
+        if (task.taskid == taskIdToDelete) {
+            taskList.splice(index, 1);
+        }
+        console.log(`TaskList size after update ${taskList.length}`);
+    }
+
+    saveTasksToStorage(taskList);
+
+    renderTaskList();
 
 }
 
@@ -192,5 +208,8 @@ $(document).ready(function () {
     });
 });
 
-// Add event listener to the form element, listen for a submit event, and call the `handleAddTask` function
+// Add event listener to the form element, listen for a submit event, and call the 'handleAddTask' function
 taskFormEl.on('submit', handleAddTask);
+
+//Add event listener to the form element, listen for a click event from the delete button , and call the 'handleDeleteTask' function
+taskFormEl.on('click', '.btn-delete-project', handleDeleteTask);

@@ -33,10 +33,86 @@ function generateTaskId() {
 // Todo: create a function to create a task card
 function createTaskCard(task) {
 
+    const taskCard = $('<div>')
+    .addClass('card draggable my-3')
+    .attr('task-unique-id', task.taskid);
+  const cardHeader = $('<div>').addClass('card-header h4').text(task.tasktitle);
+  const cardBody = $('<div>').addClass('card-body');
+  const cardDescription = $('<p>').addClass('card-text').text(task.taskdesc);
+  const cardDueDate = $('<p>').addClass('card-text').text(task.taskduedate);
+  const cardDeleteBtn = $('<button>')
+    .addClass('btn btn-danger delete')
+    .text('Delete')
+    .attr('task-unique-id', task.taskid);
+  cardDeleteBtn.on('click', handleDeleteTask);
+
+
+  if (task.taskduedate && task.status !== 'done') {
+    const now = dayjs();
+    const taskDueDate = dayjs(task.taskduedate, 'DD/MM/YYYY');
+
+    // If the task is due today, make the card yellow. If it is overdue, make it red.
+    if (now.isSame(taskDueDate, 'day')) {
+      taskCard.addClass('bg-warning text-white');
+    } else if (now.isAfter(taskDueDate)) {
+      taskCard.addClass('bg-danger text-white');
+      cardDeleteBtn.addClass('border-light');
+    }
+  }
+
+  cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+  taskCard.append(cardHeader, cardBody);
+
+  return taskCard;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+//  Function call to read tasks list from local storage.
+    const tasks = readTasksFromStorage();
+
+  //  Empty existing tasks cards out of the lanes
+  const todoList = $('#todo-cards');
+  todoList.empty();
+
+  const inProgressList = $('#in-progress-cards');
+  inProgressList.empty();
+
+  const doneList = $('#done-cards');
+  doneList.empty();
+
+
+  //  Loop through tasks and create task cards for each status : Function call to create the bootstrap task cardss.
+  for (let task of tasks) {
+    if (task.status === 'to-do') {
+      todoList.append(createTaskCard(task));
+    } else if (task.status === 'in-progress') {
+      inProgressList.append(createTaskCard(task));
+    } else if (task.status === 'done') {
+      doneList.append(createTaskCard(task));
+    }
+  }
+
+  //  Use JQuery UI to make task cards draggable
+  $('.draggable').draggable({
+    opacity: 0.7,
+    zIndex: 100,
+    // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+    helper: function (e) {
+      console.log(e.target);
+      // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
+      const original = $(e.target).hasClass('ui-draggable')
+        ? $(e.target)
+        : $(e.target).closest('.ui-draggable');
+
+        console.log(original);
+      // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
+      return original.clone().css({
+        width: original.outerWidth(),
+      });
+    },
+  });
+
 
 }
 
@@ -53,6 +129,7 @@ function handleAddTask(event) {
     const taskDueDate = taskDueDateInputEl.val();
     const taskDescription = taskDescInputEl.val().trim();
 
+    // The task title and task due date are mandatory for adding the tasks.
 if( taskTitle != ""  &&  taskDueDate != "" ){
 
     const taskDetail = {
@@ -63,10 +140,16 @@ if( taskTitle != ""  &&  taskDueDate != "" ){
         status: 'to-do',
     };
 
+    //Function call to read tasks from local storage and update the list
     const allTasks = readTasksFromStorage();
     allTasks.push(taskDetail);
 
+    //Function call to add tasks to local storage
     saveTasksToStorage(allTasks);
+
+    //Function call to create and display the tasks cards in the lanes.
+    renderTaskList();
+
 
     // Clear the form inputs
     taskTitleInputEl.val('');
@@ -80,13 +163,9 @@ if( taskTitle != ""  &&  taskDueDate != "" ){
 }else{
 
     event.stopPropagation();
-
     console.log(taskFormEl);
     taskFormEl.addClass('was-validated');   
-
-   
-
-   
+    
 }
 
 

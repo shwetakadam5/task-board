@@ -22,41 +22,42 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal" title="Click here to Add Task">Add Task</button>
     </div>
-   <!-- Created a modal with a form to add tasks Start-->
+
+    <!-- Start Created a modal with a form to add tasks -->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="formModalLabel">Add Task</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Click here to Close "></button>
           </div>
           <div class="modal-body">
             <form class="row g-3 needs-validation" id="task-form" novalidate>
               <div class="col-md-6">
-                <label for="inputTaskTitle" class="form-label">Task Title</label>
-                <input id="task-title-input" type="text" class="form-control" placeholder="Enter Task Title" required>
+                <label for="inputTaskTitle" class="form-label" title="Task Title">Task Title</label>
+                <input id="task-title-input" type="text" class="form-control" placeholder="Enter Task Title" required title="Enter the task title here">
                 <div class="invalid-feedback">
-                  Task Title is mandatory to Add Task.
+                  Task Title is mandatory.
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="inputDueDate" class="form-label">Task Due Date</label>
+                <label for="inputDueDate" class="form-label" title="Task Due Date">Task Due Date</label>
                 <input id="task-due-date-input" type="text" class="form-control" id="datepicker" autocomplete="off"
-                  placeholder="Enter task due date" required/>
-                  <div class="invalid-feedback">
-                    Task Due Date is mandatory to Add Task.
-                  </div>
+                  placeholder="Enter task due date" required title="Enter the task due date here"/>
+                <div class="invalid-feedback">
+                  Task Due Date is mandatory.
+                </div>
               </div>
               <div class="col-12">
-                <label for="textareaTaskDesc" class="form-label">Task Description</label>
+                <label for="textareaTaskDesc" class="form-label" title="Task Description">Task Description</label>
                 <textarea id="task-desc" class="form-control" rows="3"
-                  placeholder="Start typing task description"></textarea>
+                  placeholder="Start typing task description" title="Enter the task description here"></textarea>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary">Close</button>
-                <button type="submit" class="btn btn-primary btn-success">Add Task</button>
+                <button type="submit" class="btn btn-primary btn-success" title="Click here to Add Task">Add Task</button>
               </div>
             </form>
           </div>

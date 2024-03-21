@@ -14,13 +14,12 @@ body {
 .task-card:hover {
   cursor: grab;
 }
+
 /* Styling changes for the modal component */
-.btn.btn-secondary{
+.btn.btn-secondary {
   display: none;
 }
 
-.modal-footer{
-
+.modal-footer {
   justify-content: center;
 }
-
